@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^polls/', include('polls.urls')),
+    (r'^api/', include('polls_api.urls')),
 )
