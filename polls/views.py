@@ -13,16 +13,16 @@ def index(request):
 
 def detail(request, poll_id):
     p = get_object_or_404(Poll.published.all(), pk=poll_id)
-    
+
     if request.method == 'POST':
         form = PollForm(request.POST, instance=p)
-        
+
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('polls_results', kwargs={'poll_id': p.id}))
     else:
         form = PollForm(instance=p)
-    
+
     return render_to_response('polls/detail.html', {
         'poll': p,
         'form': form,
@@ -31,4 +31,5 @@ def detail(request, poll_id):
 
 def results(request, poll_id):
     p = get_object_or_404(Poll.published.all(), pk=poll_id)
-    return render_to_response('polls/results.html', {'poll': p})
+    return render_to_response('polls/results.html', {'poll': p},
+                              context_instance=RequestContext(request))
