@@ -12,8 +12,12 @@
 </form>
 
 <script>
-  results = new Polls.Results({{ initial_results_data|default:'{}'|safe }});
-  results.url = '{% url polls_api_results poll.id %}';
+  workflow = new Polls.Workflow({
+    resultsUrl: '{% url polls_api_results poll.id %}',
+    initialResults: {{ initial_results_data|default:'{}'|safe }}
+  });
+
+  Backbone.history.start({pushState: true});
 </script>
 
 {% endblock %}
