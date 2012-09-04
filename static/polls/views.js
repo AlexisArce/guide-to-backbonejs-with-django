@@ -22,10 +22,12 @@ var Polls = Polls || {};
       this.hideVoteForm();
       this.resultsView.$el.show();
       this.resultsView.render();
+      this.model.watch();
     },
 
     hideResults: function() {
       this.resultsView.$el.hide();
+      this.model.stopWatching();
     }
   });
 

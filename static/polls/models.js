@@ -11,6 +11,15 @@ var Polls = Polls || {};
         {choice: choiceId},
         function(data) { self.set(data); }
       );
+    },
+
+    watch: function() {
+      this.fetch();
+      this.timeout = setTimeout(_.bind(this.watch, this), 1000);
+    },
+
+    stopWatching: function() {
+      clearTimeout(this.timeout);
     }
   });
 
