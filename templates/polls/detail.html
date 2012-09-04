@@ -12,11 +12,8 @@
 </form>
 
 <script>
-  results = new Polls.Results();
-  results.url = '{% url polls_api_results poll.id %}';
-
   workflow = new Polls.Workflow({
-    model: results
+    resultsUrl: '{% url polls_api_results poll.id %}'
   });
 
   Backbone.history.start({pushState: true});

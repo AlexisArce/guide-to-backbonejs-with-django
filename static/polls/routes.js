@@ -3,6 +3,12 @@ var Polls = Polls || {};
 (function(P, $) {
 
   P.Workflow = Backbone.Router.extend({
+    initialize: function(options) {
+      this.results = new P.Results();
+      this.results.url = options.resultsUrl;
+
+      // Create the app views
+    },
 
     routes: {
       '/polls/:id/':         'showPoll',
@@ -10,11 +16,11 @@ var Polls = Polls || {};
     },
 
     showPoll: function(id) {
-
+      // Tell the app view to show the poll form
     },
 
     showResults: function(id) {
-
+      // Tell the app view to show the results
     }
 
   });
