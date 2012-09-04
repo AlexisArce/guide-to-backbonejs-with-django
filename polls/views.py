@@ -1,9 +1,11 @@
+import json
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from polls.forms import PollForm
 from polls.models import Poll, Choice
+from polls_api.resources import PollResource
 
 
 def index(request):
@@ -23,9 +25,12 @@ def detail(request, poll_id):
     else:
         form = PollForm(instance=p)
 
+    initial_results_data = PollResource().serialize(p)
+
     return render_to_response('polls/detail.html', {
         'poll': p,
         'form': form,
+        'initial_results_data': json.dumps(initial_results_data)
     }, context_instance=RequestContext(request))
 
 

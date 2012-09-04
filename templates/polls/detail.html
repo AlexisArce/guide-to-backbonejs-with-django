@@ -12,7 +12,7 @@
 </form>
 
 <script>
-  results = new Polls.Results();
+  results = new Polls.Results({{ initial_results_data|default:'{}'|safe }});
   results.url = '{% url polls_api_results poll.id %}';
 </script>
 
