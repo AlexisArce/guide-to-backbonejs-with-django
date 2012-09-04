@@ -32,7 +32,8 @@ Of course, I want to set up an environment and actually install Django::
 (We will try to keep the dependency list short for this project.)
 
 Initialize the project, and then check to make sure that everything is working
-as expected.  There is a SQLite database bundled with the project, so you should
+as expected.  There is a SQLite database bundled with the project (username:
+admin, password: abc123), so you should
 just be able to start running.  First, make sure the tests pass::
 
     ./manage.py test polls
