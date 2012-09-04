@@ -7,20 +7,23 @@ var Polls = Polls || {};
       this.results = new P.Results(options.initialResults);
       this.results.url = options.resultsUrl;
 
-      // Create the app views
+      this.pollView = new P.PollView({
+        model: this.results,
+        app: this
+      });
     },
 
     routes: {
-      '/polls/:id/':         'showPoll',
-      '/polls/:id/results/': 'showResults'
+      'polls/:id/':         'showVoteForm',
+      'polls/:id/results/': 'showResults'
     },
 
-    showPoll: function(id) {
-      // Tell the app view to show the poll form
+    showVoteForm: function(id) {
+      this.pollView.showVoteForm();
     },
 
     showResults: function(id) {
-      // Tell the app view to show the results
+      this.pollView.showResults();
     }
 
   });

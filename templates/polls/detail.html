@@ -5,11 +5,24 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="." method="post">
+<form action="." method="post" id="id_vote_form">
 {% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Vote" />
 </form>
+
+<div id="id_results_box">
+  <ul>
+    {% for choice in poll.choice_set.all %}
+    <li class="choice_bar" id="id_choice_{{ choice.id }}_bar">
+      <div class="off">{{ choice.choice }} -- <span class="count">{{ choice.votes }}</span> vote{{ choice.votes|pluralize }}</div>
+      <div class="on">{{ choice.choice }} -- <span class="count">{{ choice.votes }}</span> vote{{ choice.votes|pluralize }}</div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url polls_detail poll_id=poll.id %}">Vote again?</a>
+</div>
 
 <script>
   workflow = new Polls.Workflow({

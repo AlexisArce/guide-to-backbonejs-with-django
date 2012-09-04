@@ -21,3 +21,26 @@ a {
     display: block;
     margin: 1em 0px;
 }
+
+#id_results_box {
+  display: none;
+  text-align: left;
+}
+
+.choice_bar {
+    position: relative;
+    width: 100%;
+}
+
+.on {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 0px;
+
+    white-space: nowrap;
+    overflow: hidden;
+
+    color: white;
+    background-color: gray;
+}
