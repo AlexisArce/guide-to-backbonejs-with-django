@@ -10,4 +10,10 @@
 {{ form.as_p }}
 <input type="submit" value="Vote" />
 </form>
+
+<script>
+  results = new Polls.Results();
+  results.url = '{% url polls_api_results poll.id %}';
+</script>
+
 {% endblock %}
