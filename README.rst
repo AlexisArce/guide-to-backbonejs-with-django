@@ -110,7 +110,9 @@ Automated Testing
 ~~~~~~~~~~~~~~~~~
 
 You may want to download a library for writing automated tests as well.  I find
-`QUnit`_ to work well.  Some prefer *Jasmine*.
+`QUnit`_ to work well, and if you're familiar with xUnit testing frameworks
+(like the Python unittest package), then it'll make a lot of sense to you.
+However, some prefer *Jasmine*.
 
 To set up QUnit, first download the library::
 
@@ -216,19 +218,22 @@ DRYness
 -------
 
 One thing I've been experimenting with is using the same templating language on
-both the client and the server.  I have been working on a Django template
-adapter for the PyBars project, with the intention of using Handlebars in both
-places.  With Handlebars, it would be possible to still use many of Dajngo's
-template tags and filters in the templates.
+both the client and the server. I have been working on a Django template adapter
+for the PyBars project (`djangobars`_), with the intention of using Handlebars
+in both places. With Handlebars, it would be possible to still use many of
+Dajngo's template tags and filters in the templates.
 
 Though I like this approach, some potential downsides include:
 
 * having to implement Django's filters in Javascript as well, if I really
   want to use the templates without modification on both ends of the pipe
 
+.. _djangobars: https://github.com/mjumbewu/djangobars
+
 I18n
 ----
 
-References
-==========
-.. [#] http://qunitjs.com/
+I've recently built support for Django's ``makemessages`` command in to
+`django-mustachejs`_. I find this to work pretty well.
+
+.. _django-mustachejs: https://github.com/mjumbewu/django-mustachejs
