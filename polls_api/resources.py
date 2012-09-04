@@ -3,7 +3,7 @@ from polls.models import Poll
 
 class PollResource (resources.ModelResource):
     model = Poll
-    fields = ('question', 'choices')
+    fields = ('id', 'question', 'choices')
     exclude = ()
 
     def choices(self, poll):
