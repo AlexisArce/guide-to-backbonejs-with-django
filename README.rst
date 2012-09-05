@@ -55,6 +55,9 @@ Now, run the server::
 In your browser, go to *http://localhost:8000/polls/* and click around for a
 while.  If everything looks alright, let's continue.
 
+**Up until this point, the project code corresponds to the tag bb01-initial.
+  The next few sections describe the bb02-explore_models tag.**
+
 Step 1: Setting Up the JavaScript Dependencies
 ==============================================
 
@@ -189,19 +192,76 @@ Now we're ready to start with Backbone!
 Exposing an API
 ===============
 
-For something simple and low-security like this polling app, the no-frills API
-that we created here is sufficient.  In production applications, you may have
-need of a more full-featured API framework.  Every so often someone writes a
-good roundup of the options in this regard on their blog, on some mailing list,
-or on Stack Overflow.  The most recent good one that I've come across is on
-Daniel Greenfield's (`@pydanny`_) post `Choosing an API framework for Django`_.
-Danny recommends TastyPie and Django REST Framework
+For something simple and low-security like this polling app, we may not really
+need a full-featured API framework, but we'll use one anyway, for demonstration.
+Every so often someone writes a good roundup of the options in this regard on
+their blog, on some mailing list, or on Stack Overflow. The most recent good one
+that I've come across is on Daniel Greenfield's (`@pydanny`_) post `Choosing an
+API framework for Django`_. Danny recommends TastyPie and Django REST Framework.
+
+We'll use Django REST Framework (DRF), but keep it as simple as we can.  First,
+install DRF using the `install instructions`_ on Read the Docs.  Now create an
+app for the API called ``polls_api``.  In the ``polls_api.views`` module,
+enter the following::
+
+    from django.shortcuts import get_object_or_404
+    from djangorestframework import views
+    from polls.models import Poll
+
+    class PollResults (views.View):
+
+        def get(self, request, poll_id):
+            poll = get_object_or_404(Poll.objects.all(), pk=poll_id)
+            results = {
+                'question': poll.question,
+                'choices': [{
+                    'id': choice.id,
+                    'choice': choice.choice,
+                    'votes': choice.votes
+                } for choice in poll.choice_set.all()]
+            }
+            return results
+
+    poll_results_view = PollResults.as_view()
+
+Let's break this down.  Django REST Framework uses an interface similar to
+Django's core `class-based views`_.  Here we define a view class that supports
+one HTTP method: GET.
+
+::
+
+    ...
+    class PollResults (views.View):
+
+        def get(self, request, poll_id):
+            ...
+
+Next, we get the requested poll object, and construct a dictionary of data that
+represents what we want to return to the client.
+
+::
+
+            results = {
+                ...
+            }
+            return results
+
+Note that our view method then just returns this dictionary, not an
+HttpResponse. DRF alows us to simple return the data we want represented by the
+API. This data will be encoded as JSON or JSON-P or XML, ..., depending on what
+is requested by the client.
 
 .. _@pydanny:
    http://www.twitter.com/pydanny
 
 .. _Choosing an API framework for Django:
    http://pydanny.com/choosing-an-api-framework-for-django.html
+
+.. _install instructions:
+   http://django-rest-framework.readthedocs.org/en/latest/#installation
+
+.. _class-based views:
+   https://docs.djangoproject.com/en/dev/topics/class-based-views/
 
 
 A11y - Hijacking References and Submissions
